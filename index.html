@@ -120,6 +120,18 @@
   .pri.P1 { background: #111; }
   .pri.P2 { background: #777; border-color: #777; }
   .pri.P3 { background: #fff; color: #111; }
+  /* Priority picker on the right of each card: change priority without opening it. */
+  .pri-pick {
+    flex: none; align-self: center; margin-left: 8px; min-width: 76px; height: 32px; padding: 0 22px 0 10px;
+    -webkit-appearance: none; appearance: none; cursor: pointer;
+    border: 1px solid var(--ink); border-radius: 7px; font-size: 13px; font-weight: 800; letter-spacing: .04em;
+    background-repeat: no-repeat; background-position: right 8px center; background-size: 8px 5px;
+  }
+  .pri-pick.P1 { background-color: #111; color: #fff; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23fff'/%3E%3C/svg%3E"); }
+  .pri-pick.P2 { background-color: #777; border-color: #777; color: #fff; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23fff'/%3E%3C/svg%3E"); }
+  .pri-pick.P3, .pri-pick.COMMON { background-color: #fff; color: #111; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23111'/%3E%3C/svg%3E"); }
+  .pri-pick.COMMON { border-color: #b5b5b5; color: var(--muted); font-weight: 600; }
+  .pri-pick:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
   .due.over { color: var(--red); font-weight: 650; }
   .due.today { color: var(--ink); font-weight: 650; }
   .preview { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; flex: 1 1 100%; }
@@ -177,6 +189,7 @@
     main { padding: 18px 12px 110px; }
     .head h1 { font-size: 24px; }
     .two { grid-template-columns: 1fr; }
+    .pri-pick { font-size: 16px; min-width: 84px; height: 36px; } /* 16px stops iPhone zooming in on tap */
   }
   @media (min-width: 761px) { .tab .name-short { display: none; } }
 </style>
@@ -463,7 +476,7 @@ function onDrop(evt) {
 function render(force) {
   if (!force) {
     const a = document.activeElement;
-    if (a && a.closest && a.closest('.edit')) { pendingRender = true; return; }
+    if (a && a.closest && a.closest('.edit, .pri-pick')) { pendingRender = true; return; }
   }
   pendingRender = false;
   renderNav();
@@ -537,11 +550,15 @@ function taskEl(t, isDone) {
     h('div', { class: 'body', onclick: toggle },
       h('div', { class: 'title' }, t.title),
       h('div', { class: 'meta' },
-        !isDone && priOf(t) !== 'COMMON' ? h('span', { class: 'pri ' + priOf(t) }, priOf(t)) : null,
         h('span', { class: 'tag' }, t.category),
         due ? h('span', { class: due.cls }, due.text) : null,
         isDone && t.due_date ? h('span', null, 'Was due ' + fmtDate(parseDate(t.due_date))) : null,
         preview && expandedId !== t.id ? h('span', { class: 'preview' }, preview) : null)),
+    isDone ? null : h('select', {
+      class: 'pri-pick ' + priOf(t), 'aria-label': 'Priority', title: 'Change priority', value: priOf(t),
+      onclick: (e) => e.stopPropagation(),
+      onchange: (e) => { update(t.id, { priority: e.target.value }); e.target.blur(); render(true); },
+    }, PRIS.map(p => h('option', { value: p.id }, p.name))),
   ));
   if (expandedId === t.id) li.append(editEl(t));
   return li;
