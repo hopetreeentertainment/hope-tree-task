@@ -127,10 +127,11 @@
     border: 1px solid var(--ink); border-radius: 7px; font-size: 13px; font-weight: 800; letter-spacing: .04em;
     background-repeat: no-repeat; background-position: right 8px center; background-size: 8px 5px;
   }
-  .pri-pick.P1 { background-color: #111; color: #fff; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23fff'/%3E%3C/svg%3E"); }
-  .pri-pick.P2 { background-color: #777; border-color: #777; color: #fff; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23fff'/%3E%3C/svg%3E"); }
-  .pri-pick.P3, .pri-pick.COMMON { background-color: #fff; color: #111; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23111'/%3E%3C/svg%3E"); }
-  .pri-pick.COMMON { border-color: #b5b5b5; color: var(--muted); font-weight: 600; }
+  /* Soft pastel pills with dark text in the same colour, so they stay easy to read. */
+  .pri-pick.P1 { background-color: #fde2e1; border-color: #f2a7a3; color: #9b1c1c; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%239b1c1c'/%3E%3C/svg%3E"); }
+  .pri-pick.P2 { background-color: #fee8d2; border-color: #f4bd85; color: #9a4a0b; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%239a4a0b'/%3E%3C/svg%3E"); }
+  .pri-pick.P3 { background-color: #fdf3c4; border-color: #e9d47a; color: #7a5a00; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%237a5a00'/%3E%3C/svg%3E"); }
+  .pri-pick.COMMON { background-color: #fff; border-color: #b5b5b5; color: var(--muted); font-weight: 600; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23666'/%3E%3C/svg%3E"); }
   .pri-pick:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
   .due.over { color: var(--red); font-weight: 650; }
   .due.today { color: var(--ink); font-weight: 650; }
